@@ -10,4 +10,5 @@ client = commands.Bot(command_prefix=prefix.get_prefix)
 
 
 client.load_extension("cogs.admin")
+client.load_extension("cogs.economy")
 client.run(token)

@@ -8,7 +8,7 @@ cursor.execute("CREATE TABLE prefixes (GuildID varchar(24) UNIQUE, Prefix varcha
 connection.commit()
 """
 
-DEFAULT_PREFIX = "jc!"
+DEFAULT_PREFIX = ";"
 
 connection = sqlite3.connect("database.db")
 cursor = connection.cursor()

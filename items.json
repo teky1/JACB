@@ -1,0 +1,14 @@
+[{
+  "id": 0,
+  "name": "Stale Bread",
+  "desc": "It's literally just stale bread.",
+  "file_name": "stale_bread.png",
+  "emoji": "<:stale_bread:860287360020774922>",
+  "category": "Food",
+  "buyable": true,
+  "buy_price": 3,
+  "sellable": true,
+  "sell_price": 1,
+  "tradeable": true,
+  "max_amount": null
+}]

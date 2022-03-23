@@ -1,0 +1,25 @@
+{
+  "id": 0001,
+  "name": "wow ITem!!",
+  "desc": "description about the item",
+  "file_name": "something.png"
+  "emoji": "<:smth:2348498274982374892374982374892479287348923749827348>"
+  "category": "random category",
+  "buyable": True,
+  "buy_price": 45, //Optional only needed if buyable is true
+  "sellable": True,
+  "sell_price": 30, //Optional only needed if sellable is true
+  "tradeable": True, //Whether this item can be given to others
+  "max_amount": 10, //The max amount of this that someone can have (Can be None)
+}
+
+ITEM DATABASE:
+ItemID UserID Count
+
+
+
+
+
+
+stalebread:
+http://pixelartmaker.com/art/7dbe6113570da6a

@@ -1,6 +1,7 @@
 from discord.ext import commands
 from discord.ext.commands import BucketType
 import cogs.utils.balance_manager as bal
+import cogs.utils.inventory_manager as inv
 import cogs.utils.error_messages as error_msg
 import discord
 import typing
@@ -17,6 +18,7 @@ class Economy(commands.Cog):
         balance = bal.getBalance(who.id)
         await ctx.send(f"{who.display_name}'s balance is **{balance}**")
 
+
     @balance.error
     async def balance_error(self, ctx: commands.Context, error):
         if isinstance(error, commands.CommandOnCooldown):
@@ -25,7 +27,7 @@ class Economy(commands.Cog):
             raise error
 
     @commands.command(name="beg")
-    @commands.cooldown(rate=1, per=30, type=BucketType.user)
+    @commands.cooldown(rate=1, per=1, type=BucketType.user)
     async def beg(self, ctx: commands.Context):
         # 50% chance to give nothing and 50% chance to get between 0-200
         payment = 0 if random.randrange(4) == 1 else random.randrange(50)
@@ -33,7 +35,12 @@ class Economy(commands.Cog):
         if payment == 0:
             await ctx.send(f"{ctx.author.mention} Nobody cared, you got nothing.")
         else:
-            await ctx.send(f"{ctx.author.mention}, A kind stranger donated **{payment}**")
+            if random.randrange(5) > 2:
+                amount = random.randrange(2)+1
+                inv.addItem(ctx.author.id, 0, amount)
+                await ctx.send(f"{ctx.author.mention}, A kind stranger donated **{payment}** and {inv.formatItemName(0, amount)}")
+            else:
+                await ctx.send(f"{ctx.author.mention}, A kind stranger donated **{payment}**")
 
     @beg.error
     async def beg_error(self, ctx: commands.Context, error):
@@ -106,6 +113,21 @@ class Economy(commands.Cog):
             await error_msg.cooldown_error(ctx, error)
         elif isinstance(error, commands.MissingRequiredArgument):
             await error_msg.missingargument_error(ctx, error, response_dict, correct_format)
+        else:
+            raise error
+
+    @commands.command(name="inventory", aliases=["inv",])
+    @commands.cooldown(rate=1, per=3, type=BucketType.user)
+    async def inventory(self, ctx: commands.Context, who: typing.Optional[discord.User]):
+        who = ctx.author if who is None else who
+        raw_inv = inv.getInventory(who.id)
+        # output = ctx.author.
+        await ctx.send(str(raw_inv))
+
+    @inventory.error
+    async def inventory_error(self, ctx: commands.Context, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            await error_msg.cooldown_error(ctx, error)
         else:
             raise error
 
